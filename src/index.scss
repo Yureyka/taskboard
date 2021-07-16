@@ -1,0 +1,196 @@
+$primary: #FFA7A7;
+$secondary: #FFECEC;
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+        url('./assets/fonts/roboto-v27-latin_cyrillic-regular.woff2') format('woff2'),
+        url('./assets/fonts/roboto-v27-latin_cyrillic-regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    src: local(''),
+        url('./assets/fonts/roboto-v27-latin_cyrillic-300.woff2') format('woff2'),
+        url('./assets/fonts/roboto-v27-latin_cyrillic-300.woff') format('woff');
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    max-width: 100%;
+    background-color: #fff6f6;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+.App {
+    padding: 20px 0;
+    height: 100%;
+}
+
+.content {
+    width: 30%;
+    height: 100%;
+    background-color: $primary;
+    margin: 0 auto;
+    border-radius: 50px;
+    position: relative;
+}
+
+
+.dates {
+    padding: 42px 30px 26px;
+
+    &__title {
+        font-size: 30px;
+        color: #fff;
+        padding-bottom: 10px;
+    }
+
+    &__line {
+        display: flex;
+        justify-content: space-between;
+        color: #fff;
+        font-weight: 300;
+        margin-bottom: 2px;
+    }
+}
+
+.categories {
+    background-color: $secondary;
+    border-radius: 50px;
+    padding: 26px 30px;
+    height: calc(100% - 156px);
+
+
+}
+
+.add-category {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.category {
+    background-color: #fff;
+    border-radius: 30px;
+    margin-bottom: 25px;
+    padding: 20px 35px 20px 30px;
+    box-shadow: 0px 100px 80px rgba(187, 166, 166, 0.07), 0px 41.7776px 33.4221px rgba(187, 166, 166, 0.0503198), 0px 22.3363px 17.869px rgba(187, 166, 166, 0.0417275), 0px 12.5216px 10.0172px rgba(187, 166, 166, 0.035), 0px 6.6501px 5.32008px rgba(187, 166, 166, 0.0282725), 0px 2.76726px 2.21381px rgba(187, 166, 166, 0.0196802);
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 14px;
+
+        h4 {
+            font-size: 18px;
+            font-weight: 400;
+        }
+    }
+
+    &__list {
+        padding: 0 2px 0 16px;
+    }
+
+
+}
+
+.todo {
+    display: flex;
+    justify-content: space-between;
+
+    &__title {
+        font-size: 12px;
+        font-weight: 300;
+        color: rgb(119, 119, 119)
+    }
+}
+
+.add-form {
+    background-color: $secondary;
+    height: calc(100% - 156px);
+    border-radius: 50px;
+    padding: 50px 30px 0;
+
+    &__title {
+        font-size: 18px;
+        font-weight: 400;
+        margin-left: 20px;
+        margin-bottom: 4px;
+    }
+
+    &__input {
+        background: #fff;
+        width: 100%;
+        box-shadow: 0px 100px 80px rgba(187, 166, 166, 0.07), 0px 41.7776px 33.4221px rgba(187, 166, 166, 0.0503198), 0px 22.3363px 17.869px rgba(187, 166, 166, 0.0417275), 0px 12.5216px 10.0172px rgba(187, 166, 166, 0.035), 0px 6.6501px 5.32008px rgba(187, 166, 166, 0.0282725), 0px 2.76726px 2.21381px rgba(187, 166, 166, 0.0196802);
+        border-radius: 30px;
+        border: none;
+        padding: 20px 24px;
+        margin-bottom: 22px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__btn {
+        background: $primary;
+        box-shadow: 0px 100px 80px rgba(187, 166, 166, 0.07), 0px 41.7776px 33.4221px rgba(187, 166, 166, 0.0503198), 0px 22.3363px 17.869px rgba(187, 166, 166, 0.0417275), 0px 12.5216px 10.0172px rgba(187, 166, 166, 0.035), 0px 6.6501px 5.32008px rgba(187, 166, 166, 0.0282725), 0px 2.76726px 2.21381px rgba(187, 166, 166, 0.0196802);
+        border-radius: 30px;
+        padding: 16px;
+        width: 100%;
+        font-size: 18px;
+        color: #fff;
+        border: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
+
+    &--add {
+        padding: 2px;
+        background: none;
+    }
+
+    &--add-category {
+        padding: 10px;
+        border-radius: 10px;
+        background-color: $primary;
+    }
+
+    &--delete {
+        padding: 5px;
+        border-radius: 6px;
+        background-color: $primary;
+    }
+}

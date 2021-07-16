@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { observer } from "mobx-react";
+import { AddCategory } from "./components/AddCategory";
+import { AddCategoryForm } from "./components/AddCategoryForm";
+import { Categories } from "./components/Categories";
+import { Dates } from "./components/Dates";
+import { taskBoardStore } from "./stores/TaskBoardStore";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export const App: React.FC = observer(() => {
+    const { isAdding } = taskBoardStore;
 
-export default App;
+    return (
+        <div className="App">
+            <div className="content">
+                <Dates />
+                {!isAdding ? <Categories /> : <AddCategoryForm />}
+                <AddCategory />
+            </div>
+        </div>
+    );
+});
