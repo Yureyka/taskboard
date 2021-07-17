@@ -8,11 +8,7 @@ export const AddCategory: React.FC = () => {
 
     return (
         <div className="add-category">
-            <Button
-                icon={<AddIcon width={22} height={22} />}
-                onClick={toggleIsAdding}
-                isAddCategoryIcon
-            />
+            <Button icon={<AddIcon width={22} height={22} />} onClick={toggleIsAdding} />
         </div>
     );
 };

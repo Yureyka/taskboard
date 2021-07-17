@@ -15,8 +15,12 @@ export type CategoryItem = {
 };
 
 export class TaskBoardStore {
-    isAdding: boolean = false;
-    icon: string = "";
+    isAddingCategory: boolean = false;
+    isAddingToDo: boolean = false;
+    categoryName: string = "";
+    itemName: string = "";
+    currentDate: number = 0;
+    month: number[] = [1, 2, 3, 4, 5, 6, 7];
     data: Categories[] = [
         {
             date: new Date(),
@@ -68,10 +72,35 @@ export class TaskBoardStore {
     }
 
     toggleIsAdding = () => {
-        this.isAdding = !this.isAdding;
+        this.isAddingCategory = !this.isAddingCategory;
     };
 
-    checkItem = () => {};
+    checkDate = (): number[] => {
+        return this.month;
+    };
+
+    addCategory = () => {
+        this.data[this.currentDate].categories.push({
+            name: this.categoryName,
+            items: [],
+        });
+        this.categoryName = "";
+        this.isAddingCategory = false;
+    };
+
+    setCategoryName = (name: string) => {
+        this.categoryName = name;
+    };
+    
+    addToDo = () => {
+        this.data[this.currentDate].categories[0].items.push({
+            title: this.itemName,
+        });
+    };
+
+    setToDo = (title: string) => {
+        this.itemName = title;
+    };
 }
 
 export const taskBoardStore = new TaskBoardStore();

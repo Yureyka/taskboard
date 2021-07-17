@@ -1,6 +1,8 @@
 import React from "react";
+import { taskBoardStore } from "../stores/TaskBoardStore";
 
 export const Dates: React.FC = () => {
+    const { checkDate } = taskBoardStore;
     return (
         <div>
             <div className="dates">
@@ -15,13 +17,7 @@ export const Dates: React.FC = () => {
                     <p>Вс</p>
                 </div>
                 <div className="dates__line">
-                    <p>01</p>
-                    <p>02</p>
-                    <p>03</p>
-                    <p>04</p>
-                    <p>05</p>
-                    <p>06</p>
-                    <p>07</p>
+                    {checkDate().map(element => <p key={element}>{element}</p>)}
                 </div>
             </div>
         </div>

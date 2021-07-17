@@ -3,15 +3,15 @@ import clsx from "clsx";
 
 interface IButton {
     icon?: React.ReactNode;
-    isAddIcon?: boolean;
-    isAddCategoryIcon?: boolean;
-    isDeleteIcon?: boolean;
+    isTransparent?: boolean;
+    isFullWidth?: boolean;
+    size?: "large" | "medium" | "small";
 }
 
 export const Button: React.FC<IButton & React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
-    isAddIcon,
-    isAddCategoryIcon,
-    isDeleteIcon,
+    size = "medium",
+    isTransparent,
+    isFullWidth,
     icon,
     children,
     ...props
@@ -21,9 +21,9 @@ export const Button: React.FC<IButton & React.ButtonHTMLAttributes<HTMLButtonEle
             {...props}
             className={clsx(
                 "button",
-                isAddIcon && "button--add",
-                isAddCategoryIcon && "button--add-category",
-                isDeleteIcon && "button--delete"
+                `button--${size}`,
+                isTransparent && "button--transparent",
+                isFullWidth && "button--fullwidth"
             )}
         >
             {icon && icon}

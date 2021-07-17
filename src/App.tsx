@@ -7,13 +7,13 @@ import { Dates } from "./components/Dates";
 import { taskBoardStore } from "./stores/TaskBoardStore";
 
 export const App: React.FC = observer(() => {
-    const { isAdding } = taskBoardStore;
+    const { isAddingCategory } = taskBoardStore;
 
     return (
         <div className="App">
             <div className="content">
                 <Dates />
-                {!isAdding ? <Categories /> : <AddCategoryForm />}
+                {!isAddingCategory ? <Categories /> : <AddCategoryForm />}
                 <AddCategory />
             </div>
         </div>
