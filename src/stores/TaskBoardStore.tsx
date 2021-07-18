@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 
 export type Categories = {
     id: string;
-    date: Date;
+    date: number;
     categories: Category[];
 };
 
@@ -21,11 +21,11 @@ export type CategoryItem = {
 export class TaskBoardStore {
     isAddingCategory: boolean = false;
     categoryName: string = "";
-    currentDate: number = 0;
+    currentDate: number = new Date().getDate();
     data: Categories[] = [
         {
             id: "tfvgyh7j5t6ngjh",
-            date: new Date(),
+            date: 18,
             categories: [
                 {
                     id: "dgfdf",
@@ -84,11 +84,27 @@ export class TaskBoardStore {
     };
 
     addCategory = () => {
-        this.data[this.currentDate].categories.push({
-            id: v4(),
-            name: this.categoryName,
-            items: [],
-        });
+        const currentCategories = this.getCategories();
+
+        if (currentCategories && currentCategories.categories) {
+            currentCategories.categories.push({
+                id: v4(),
+                name: this.categoryName,
+                items: [],
+            });
+        } else {
+            this.data.push({
+                id: v4(),
+                date: this.currentDate,
+                categories: [
+                    {
+                        id: v4(),
+                        name: this.categoryName,
+                        items: [],
+                    },
+                ],
+            });
+        }
         this.categoryName = "";
         this.isAddingCategory = false;
     };
@@ -100,9 +116,7 @@ export class TaskBoardStore {
     addToDo = (id: string, title: string) => {
         if (title === "") return;
 
-        const category = this.data[this.currentDate].categories.find(
-            (category) => category.id === id
-        );
+        const category = this.getCategories().categories.find((category) => category.id === id);
         if (category) {
             category.items.push({
                 id: v4(),
@@ -111,8 +125,12 @@ export class TaskBoardStore {
         }
     };
 
+    setCurrentDate = (currentDate: number) => {
+        this.currentDate = currentDate;
+    };
+
     deleteToDo = (id: string, idCategory: string) => {
-        const category = this.data[this.currentDate].categories.find(
+        const category = this.getCategories().categories.find(
             (category) => category.id === idCategory
         );
         if (category) {
@@ -121,7 +139,7 @@ export class TaskBoardStore {
     };
 
     deleteCategory = (id: string) => {
-        this.data[this.currentDate].categories = this.data[this.currentDate].categories.filter(
+        this.getCategories().categories = this.getCategories().categories.filter(
             (item) => item.id !== id
         );
     };
@@ -146,6 +164,12 @@ export class TaskBoardStore {
         }
 
         return dates;
+    };
+
+    getCategories = (): Categories => {
+        return (
+            this.data.find((category) => category.date === this.currentDate) || ({} as Categories)
+        );
     };
 }
 
