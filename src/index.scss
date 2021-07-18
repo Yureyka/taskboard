@@ -79,7 +79,7 @@ body,
         justify-content: space-between;
         color: #fff;
         font-weight: 300;
-        margin-bottom: 2px;
+        margin: 0 -5px;
     }
 }
 
@@ -87,7 +87,7 @@ body,
     background-color: $secondary;
     border-radius: 50px;
     padding: 26px 30px 60px;
-    height: calc(100% - 156px);
+    height: calc(100% - 154px);
     overflow-y: auto;
 
     &__empty {
@@ -174,7 +174,7 @@ body,
 
 .add-form {
     background-color: $secondary;
-    height: calc(100% - 156px);
+    height: calc(100% - 154px);
     border-radius: 50px;
     padding: 50px 30px 0;
 
@@ -231,5 +231,40 @@ body,
     &--small {
         padding: 5px;
         border-radius: 6px;
+    }
+}
+
+.date-btn {
+    $self: &;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: #fff;
+    text-align: left;
+    padding: 5px;
+
+    &__week {
+        font-size: 18px;
+        font-weight: 400;
+        margin-bottom: 4px;
+    }
+
+    &__day {
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    &--current {
+        #{$self}__week {
+            font-weight: bold;
+        }
+
+        #{$self}__day {
+            font-weight: 400;
+        }
+    }
+
+    &:focus {
+        outline: none;
     }
 }

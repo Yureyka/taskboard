@@ -22,7 +22,6 @@ export class TaskBoardStore {
     isAddingCategory: boolean = false;
     categoryName: string = "";
     currentDate: number = 0;
-    month: number[] = [1, 2, 3, 4, 5, 6, 7];
     data: Categories[] = [
         {
             id: "tfvgyh7j5t6ngjh",
@@ -72,8 +71,16 @@ export class TaskBoardStore {
         this.isAddingCategory = !this.isAddingCategory;
     };
 
-    checkDate = (): number[] => {
-        return this.month;
+    checkDate = (): Date[] => {
+        const now = new Date();
+        const startDay = 1;
+        const day = now.getDay();
+        const weekStart = new Date(
+            now.valueOf() - (day <= 0 ? 7 - startDay : day - startDay) * 86400000
+        );
+        const weekEnd = new Date(weekStart.valueOf() + 6 * 86400000);
+
+        return this.getDatesBetween(weekStart, weekEnd);
     };
 
     addCategory = () => {
@@ -117,6 +124,28 @@ export class TaskBoardStore {
         this.data[this.currentDate].categories = this.data[this.currentDate].categories.filter(
             (item) => item.id !== id
         );
+    };
+
+    getDatesBetween = (startDate: Date, endDate: Date) => {
+        const dates = [];
+
+        let currentDate = new Date(
+            startDate.getFullYear(),
+            startDate.getMonth(),
+            startDate.getDate()
+        );
+
+        while (currentDate <= endDate) {
+            dates.push(currentDate);
+
+            currentDate = new Date(
+                currentDate.getFullYear(),
+                currentDate.getMonth(),
+                currentDate.getDate() + 1
+            );
+        }
+
+        return dates;
     };
 }
 

@@ -1,5 +1,8 @@
 import React from "react";
 import { taskBoardStore } from "../stores/TaskBoardStore";
+import { DateItem } from "./DateItem";
+
+const weeks = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 export const Dates: React.FC = () => {
     const { checkDate } = taskBoardStore;
@@ -8,16 +11,9 @@ export const Dates: React.FC = () => {
             <div className="dates">
                 <h3 className="dates__title">Мои задачи</h3>
                 <div className="dates__line">
-                    <p>Пн</p>
-                    <p>Вт</p>
-                    <p>Ср</p>
-                    <p>Чт</p>
-                    <p>Пт</p>
-                    <p>Сб</p>
-                    <p>Вс</p>
-                </div>
-                <div className="dates__line">
-                    {checkDate().map(element => <p key={element}>{element}</p>)}
+                    {checkDate().map((date, index) => (
+                        <DateItem isCurrent={new Date().getDate() === date.getDate()} dayName={weeks[index]} dayNumber={date.getDate()} />
+                    ))}
                 </div>
             </div>
         </div>
