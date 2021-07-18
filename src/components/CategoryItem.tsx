@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./Button";
-import { AddIcon } from "../Icons/AddIcon";
-import { Category } from "../stores/TaskBoardStore";
+import { PlusIcon } from "../Icons/PlusIcon";
+import { Category, taskBoardStore } from "../stores/TaskBoardStore";
 import { Item } from "./Item";
-import { DeleteIcon } from "../Icons/DeleteIcon";
+import { TrashIcon } from "../Icons/TrashIcon";
+import { observer } from "mobx-react";
+import { TextField } from "./TextField";
 
 interface ICategory {
     category: Category;
 }
 
-export const CategoryItem: React.FC<ICategory> = ({ category }) => {
+export const CategoryItem: React.FC<ICategory> = observer(({ category }) => {
+    const [isAddingToDo, setIsAddingToDo] = useState(false);
+    const [value, setValue] = useState("");
+
+    const { addToDo, deleteCategory } = taskBoardStore;
+
+    const handleSubmit = (e: React.FormEvent): void => {
+        e.preventDefault();
+        addToDo(category.id, value);
+        setValue("");
+    };
+
     return (
         <div className="category">
             <div className="category__top">
@@ -18,19 +31,39 @@ export const CategoryItem: React.FC<ICategory> = ({ category }) => {
                     <Button
                         size="small"
                         isTransparent
-                        icon={<AddIcon color="#000" width={12} height={12} />}
+                        icon={<PlusIcon color="#000" width={12} height={12} />}
+                        onClick={() => setIsAddingToDo((prev) => !prev)}
                     />
                     <Button
                         size="small"
-                        icon={<DeleteIcon color="#fff" width={12} height={12} />}
+                        icon={<TrashIcon color="#fff" width={12} height={12} />}
+                        onClick={() => deleteCategory(category.id)}
                     />
                 </div>
             </div>
+            {isAddingToDo && (
+                <form onSubmit={handleSubmit} className="category__add-item">
+                    <TextField
+                        className="category__add-item--input"
+                        value={value}
+                        onChange={setValue}
+                    />
+                    <Button
+                        type="submit"
+                        size="small"
+                        icon={<PlusIcon color="#fff" width={12} height={12} />}
+                    />
+                </form>
+            )}
             <ul className="category__list">
-                {category.items.map((item) => (
-                    <Item key={item.title} item={item} />
-                ))}
+                {category.items.length > 0 ? (
+                    category.items.map((item) => (
+                        <Item key={item.id} idCategory={category.id} item={item} />
+                    ))
+                ) : (
+                    <p className="category__empty">Ничего нет :c</p>
+                )}
             </ul>
         </div>
     );
-};
+});

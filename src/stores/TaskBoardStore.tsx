@@ -1,65 +1,62 @@
 import { makeAutoObservable } from "mobx";
+import { v4 } from "uuid";
 
 export type Categories = {
+    id: string;
     date: Date;
     categories: Category[];
 };
 
 export type Category = {
+    id: string;
     name: string;
     items: CategoryItem[];
 };
 
 export type CategoryItem = {
+    id: string;
     title: string;
 };
 
 export class TaskBoardStore {
     isAddingCategory: boolean = false;
-    isAddingToDo: boolean = false;
     categoryName: string = "";
-    itemName: string = "";
     currentDate: number = 0;
     month: number[] = [1, 2, 3, 4, 5, 6, 7];
     data: Categories[] = [
         {
+            id: "tfvgyh7j5t6ngjh",
             date: new Date(),
             categories: [
                 {
+                    id: "dgfdf",
                     name: "Лекарства",
                     items: [
                         {
+                            id: "fdsfdfsd",
                             title: "Принять таблетки",
                         },
                         {
+                            id: "tryrtb",
                             title: "Выпить пиво",
                         },
                     ],
                 },
                 {
+                    id: "trgdv",
                     name: "Продукты",
                     items: [
                         {
+                            id: "etgac",
                             title: "Сметана",
                         },
                         {
+                            id: "bfdv",
                             title: "Хлеб",
                         },
                         {
+                            id: "grfbv",
                             title: "Пиво",
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            date: new Date(),
-            categories: [
-                {
-                    name: "Учеба",
-                    items: [
-                        {
-                            title: "Сдать диплом",
                         },
                     ],
                 },
@@ -71,7 +68,7 @@ export class TaskBoardStore {
         makeAutoObservable(this);
     }
 
-    toggleIsAdding = () => {
+    toggleIsAddingCategory = () => {
         this.isAddingCategory = !this.isAddingCategory;
     };
 
@@ -81,6 +78,7 @@ export class TaskBoardStore {
 
     addCategory = () => {
         this.data[this.currentDate].categories.push({
+            id: v4(),
             name: this.categoryName,
             items: [],
         });
@@ -91,15 +89,34 @@ export class TaskBoardStore {
     setCategoryName = (name: string) => {
         this.categoryName = name;
     };
-    
-    addToDo = () => {
-        this.data[this.currentDate].categories[0].items.push({
-            title: this.itemName,
-        });
+
+    addToDo = (id: string, title: string) => {
+        if (title === "") return;
+
+        const category = this.data[this.currentDate].categories.find(
+            (category) => category.id === id
+        );
+        if (category) {
+            category.items.push({
+                id: v4(),
+                title: title,
+            });
+        }
     };
 
-    setToDo = (title: string) => {
-        this.itemName = title;
+    deleteToDo = (id: string, idCategory: string) => {
+        const category = this.data[this.currentDate].categories.find(
+            (category) => category.id === idCategory
+        );
+        if (category) {
+            category.items = category.items.filter((item) => item.id !== id);
+        }
+    };
+
+    deleteCategory = (id: string) => {
+        this.data[this.currentDate].categories = this.data[this.currentDate].categories.filter(
+            (item) => item.id !== id
+        );
     };
 }
 

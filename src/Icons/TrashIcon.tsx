@@ -1,6 +1,6 @@
 import React from "react";
 
-export const DeleteIcon: React.FC<{
+export const TrashIcon: React.FC<{
     color?: string;
     width?: number;
     height?: number;

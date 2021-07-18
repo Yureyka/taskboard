@@ -1,13 +1,15 @@
 import React from "react";
-import { DeleteIcon } from "../Icons/DeleteIcon";
-import { CategoryItem } from "../stores/TaskBoardStore";
+import { TrashIcon } from "../Icons/TrashIcon";
+import { CategoryItem, taskBoardStore } from "../stores/TaskBoardStore";
 import { Button } from "./Button";
 
 interface IItem {
     item: CategoryItem;
+    idCategory: string;
 }
 
-export const Item: React.FC<IItem> = ({ item }) => {
+export const Item: React.FC<IItem> = ({ item, idCategory }) => {
+    const { deleteToDo } = taskBoardStore;
     return (
         <li>
             <div className="todo">
@@ -15,7 +17,8 @@ export const Item: React.FC<IItem> = ({ item }) => {
                 <Button
                     isTransparent
                     size="small"
-                    icon={<DeleteIcon color="#FFA7A7" width={12} height={12} />}
+                    icon={<TrashIcon color="#FFA7A7" width={12} height={12} />}
+                    onClick={() => deleteToDo(item.id, idCategory)}
                 />
             </div>
         </li>
